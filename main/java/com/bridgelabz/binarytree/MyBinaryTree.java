@@ -1,5 +1,7 @@
 package com.bridgelabz.binarytree;
 
+import com.bridgelabz.mylinkedlistjava.NodeNotFoundException;
+
 public class MyBinaryTree<K extends Comparable<K>> 
 {
 	private MyBinaryNode<K> root;
@@ -24,8 +26,8 @@ public class MyBinaryTree<K extends Comparable<K>>
 	private MyBinaryNode<K> addRecursively(MyBinaryNode<K> current, K key) 
 	{
 		//If no node present in binary tree then create a new Binary node with key and return it.
-		//In recursion, this method also checks if the right or left of our node exists or not. If not,
-		//then it will create a new node and return it to the last recursive call made. Through that call
+		//In recursion, this method also checks if the right or left child of our current node exists or not.
+		//If not, it will create a new node and return it to the last recursive call made. Through that call
 		//this node will be assigned as the left or right of our previous parent node.
 		if(current == null)
 			return new MyBinaryNode<>(key);
@@ -61,6 +63,40 @@ public class MyBinaryTree<K extends Comparable<K>>
 	public int getSize() 
 	{
 		return this.getSizeRecursively(root);
+	}
+	
+	
+	/**
+	 * To get the node with given key.
+	 * @param key
+	 * @return Node with desired key.
+	 */
+	public MyBinaryNode<K> findNode(K key)
+	{
+		return  this.findNodeWithKey(this.root, key);
+	}
+
+	/**
+	 * Finding the desired node recursively.
+	 * @param current
+	 * @param key
+	 * @return Node with desired key.
+	 */
+	private MyBinaryNode<K> findNodeWithKey(MyBinaryNode<K> current, K key) 
+	{
+		if(current == null)
+			throw new NodeNotFoundException("Node with key "+key+" not found.");
+		int compareResult = key.compareTo(current.key);
+		
+		if(compareResult == 0)
+			return current;
+		//If the node to be found has key smaller than current node then replace the current node with left node and continue.
+		//Otherwise replace the right node as the current node and continue.
+		if(compareResult < 0)
+			current = findNodeWithKey(current.left, key);
+		else
+			current = findNodeWithKey(current.right, key);
+		return current;
 	}
 
 	/**
