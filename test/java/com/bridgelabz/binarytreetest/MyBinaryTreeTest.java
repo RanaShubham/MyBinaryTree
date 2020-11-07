@@ -79,7 +79,7 @@ public class MyBinaryTreeTest
 	}
 	
 	@Test(expected = NodeNotFoundException.class)
-	public void givenABinaryTree_WhenFindingANodeWithNullKey_ifNotPresentShouldThrowNodeNotFoundException()
+	public void givenABinaryTree_WhenFindingANodeWithNullKey_shouldThrowNodeNotFoundException()
 	{
 		MyBinaryTree<Integer> myBinaryTree = new MyBinaryTree<>();
 		myBinaryTree.add(56);
